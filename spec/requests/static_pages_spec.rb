@@ -1,20 +1,24 @@
-require 'spec_helper'
+# Anything in full quotes is for the benefit of the user
+# 'should' tests for things that should be there
+# 'should_not' tests for things that should not be there
+# Everything Rspec can be found here: http://rspec.info/
+require 'spec_helper' #Loads spec_helper file
 
-describe "Static pages" do
+describe "Static pages" do  #All tests go in this loop
 
-	subject { page }
+	subject { page }  #Defines 'page' as the subject of 'it'
   
-  shared_examples_for "all static pages" do
-    it { should have_selector('h1', text: heading) }
-    it { should have_title(full_title(page_title)) }
+  shared_examples_for "all static pages" do # shared_examples_for creates tests for all tests in loop
+    it { should have_selector('h1', text: heading) }  # have_selector('<tag>, text: 'Text' or variable) tests for a tag with that text
+    it { should have_title(full_title(page_title)) }  # have_title('title text' or variable) checks <title> tag with that text
   end
 
 	describe "Home page" do
-    before { visit root_path }
-    let(:heading)   { 'Sample App' }
+    before { visit root_path }  # 'before' ...um I'm not sure about the 'before' hook
+    let(:heading)   { 'Sample App' }  # 'let(<:symbol>) { 'Text' }' creates a variable for this block
 		let(:page_title) { '' }
     
-    it_should_behave_like "all static pages"
+    it_should_behave_like "all static pages"  # 'it_should_behave_like uses shared_examples_for tests
     it { should_not have_title('| Home') }
     it "should have the right links on the layout" do
       visit root_path
